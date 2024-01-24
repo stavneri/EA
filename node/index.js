@@ -41,7 +41,6 @@ app.get("/api/get-connections", async (req, res) => {
     console.log("get-connections was called");
     await getConnections()
     .then(response => {
-        console.log(response);
         res.status(200).send(response);
     })
     .catch(async (error) => {

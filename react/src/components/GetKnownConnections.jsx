@@ -12,22 +12,26 @@ const GetKnownConnections = () => {
           .catch((err) => {
             console.error(err);
           });
-      }, []);
+      },[connections]);
 
     return (
         <div>
             <>
             <h2>Connections</h2>
                 <table>
-                    <tr>
-                    <th>Company</th>
-                    <th>Category</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
                     {connections && connections.map(connection => 
-                    <tr key={connection.id}>
-                        <td>{connection.company}</td>
-                        <td>{connection.category}</td>
-                    </tr>
+                    <tbody key={connection.id}>
+                        <tr>
+                            <td>{connection.company}</td>
+                            <td>{connection.category}</td>
+                        </tr>
+                    </tbody>
                     )}
                 </table>
             </>

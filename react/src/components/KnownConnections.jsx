@@ -8,6 +8,25 @@ const KnownConnections = () => {
         company: '',
         category: '',
     });  
+    
+    const [connections, setConnections] = useState();
+    const [isLoading, setIsLoading] = useState(false)
+    const fetchData = async () => {
+        setIsLoading(true);
+        axios
+        .get("http://localhost:8000/api/get-connections")
+        .then((response) => {
+            setIsLoading(false);
+            setConnections(response.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    }
+
+    useEffect(() => {
+        fetchData();
+      },[connection]);
 
     const createConnection = async () => {
         await axios
@@ -72,7 +91,29 @@ const KnownConnections = () => {
                 </div>
             </div>
             <div>
-                <GetKnownConnections />
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <>
+                    <h2>Connections</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            {connections && connections.map(connection => 
+                            <tbody key={connection.id}>
+                                <tr>
+                                    <td>{connection.company}</td>
+                                    <td>{connection.category}</td>
+                                </tr>
+                            </tbody>
+                            )}
+                        </table>
+                    </>
+                )}
             </div>
         </div>
     );

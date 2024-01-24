@@ -25,7 +25,7 @@ export async function addNewConnection (body) {
 export async function getConnections (body) {
 
     try {
-        const response = await db.query(`SELECT * FROM known_connections;`);
+        const response = await db.query(`SELECT * FROM known_connections ORDER BY category ASC;`);
 
         if(response){
             return (response.rows);
