@@ -1,41 +1,36 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const GetKnownConnections = () => {
     
-    const [connections, setConnections] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [connections, setConnections] = useState();
 
-    useEffect(async () => {
-        setLoading(true)
-        fetch("http://localhost:8000/api/get-connections")
-        .then(response => response.json())
-        .then(json => setConnections(json))
-        .finally(() => {
-            setLoading(false)
-        })
-    }, []);
+    useEffect(() => {
+        axios
+          .get("http://localhost:8000/api/get-connections")
+          .then((response) => setConnections(response.data))
+          .catch((err) => {
+            console.error(err);
+          });
+      }, []);
 
     return (
         <div>
-            {loading ? (
-                <div>Loading...</div>
-            ) : (
-                <>
-                <h1>Connections</h1>
-                <table border={1}>
+            <>
+            <h2>Connections</h2>
+                <table>
                     <tr>
                     <th>Company</th>
                     <th>Category</th>
                     </tr>
-                    {connections.map(connection => (
-                    <tr>
+                    {connections && connections.map(connection => 
+                    <tr key={connection.id}>
                         <td>{connection.company}</td>
                         <td>{connection.category}</td>
                     </tr>
-                    ))}
+                    )}
                 </table>
-                </>
-            )}
+            </>
         </div>)
 }
-export default GetKnownConnections;
+export default GetKnownConnections

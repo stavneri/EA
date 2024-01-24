@@ -10,11 +10,10 @@ export async function addNewConnection (body) {
 
     try {
         await db.query(`CREATE TABLE IF NOT EXISTS known_connections
-        (company TEXT UNIQUE NOT NULL, 
+        (id serial PRIMARY KEY, company TEXT UNIQUE NOT NULL, 
         category TEXT);`);
 
         await db.query(query, [company, category]);
-        return (await db.query(`SELECT * FROM known_connections;`));
     }
     catch (err) {
         console.log(err);
@@ -32,7 +31,7 @@ export async function getConnections (body) {
             return (response.rows);
         }
         else
-        return ;
+            return ;
     }
     catch (err) {
         console.log(err);

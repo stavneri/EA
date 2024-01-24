@@ -23,8 +23,7 @@ const KnownConnections = () => {
             company: '',
             category: '',
             })
-            return alert("Connection Created: " + `${JSON.stringify(response.data)}`);
-            })
+        })
         .catch((err) => {
             return alert(err);
         });
@@ -73,7 +72,7 @@ const KnownConnections = () => {
                 </div>
             </div>
             <div>
-                {/* <GetKnownConnections /> */}
+                <GetKnownConnections />
             </div>
         </div>
     );
